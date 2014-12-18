@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "chai": "^1.10.0",
+    "codecov.io": "0.0.8",
     "harmony-reflect": "^1.1.1",
     "object-assign": "^2.0.0",
     "wassat": "^2.2.3"
