@@ -183,23 +183,24 @@ describe("#wrap()", function () {
 
   expect(function () {
     wrapped.num = false;
-  }).to.throw();
+  }).to.throw(/Property num requires values of type number but value was false \(boolean type\)\./i);
 
   expect(function () {
     wrapped.str = 123456;
-  }).to.throw();
+  }).to.throw(/Property str requires values of type string but value was 123456 \(number type\)\./i);
 
   expect(function () {
     wrapped.bool = "asdf";
-  }).to.throw();
+  }).to.throw(/Property bool requires values of type boolean but value was asdf \(string type\)\./i);
 
   expect(function () {
     wrapped.arr = {};
-  }).to.throw();
+  }).to.throw(/Property arr requires values of type array but value was \[object Object\] \(object type\)\./i);
 
   expect(function () {
     wrapped.obj = [];
-  }).to.throw();
+  }).to.throw(/Property obj requires values of type object but value was  \(array type\)\./i);
+
 
 });
 
@@ -212,30 +213,9 @@ describe("bad schema", function () {
     }
 
     expect(function () {
-      var SafeStars = Bubblewrap(Stairs, {
+      var SafeStairs = Bubblewrap(Stairs, {
         steps: "asdf"
       });
-    }).to.throw(/isn't a valid type name/);
-
-  });
-});
-
-describe("addType", function () {
-  it("allows you to add a defined type", function () {
-    Bubblewrap.addType("Person", function (input) {
-      return input instanceof Person;
-    });
-
-    var thing = {
-      person: new Person()
-    };
-
-    var schema = {
-      person: "Person"
-    };
-
-    expect(function () {thing = Bubblewrap.wrap(thing, schema);}).to.not.throw();
-    // expect(function () {thing.person = {};}).to.throw();
-
+    }).to.throw(/asdf isn't a valid type name/);
   });
 });
