@@ -2,6 +2,8 @@ var Bubblewrap = require("..");
 var expect = require("chai").expect;
 var assign = require("object-assign");
 
+function Person (name, age) {}
+
 describe("Bubblewrap", function () {
 
   var goodData = {
@@ -214,6 +216,26 @@ describe("bad schema", function () {
         steps: "asdf"
       });
     }).to.throw(/isn't a valid type name/);
+
+  });
+});
+
+describe("addType", function () {
+  it("allows you to add a defined type", function () {
+    Bubblewrap.addType("Person", function (input) {
+      return input instanceof Person;
+    });
+
+    var thing = {
+      person: new Person()
+    };
+
+    var schema = {
+      person: "Person"
+    };
+
+    expect(function () {thing = Bubblewrap.wrap(thing, schema);}).to.not.throw();
+    // expect(function () {thing.person = {};}).to.throw();
 
   });
 });
